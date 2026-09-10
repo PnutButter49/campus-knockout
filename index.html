@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#0b1020">
 <title>Campus Knockout</title>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="online.css">
 </head>
 <body>
 <header class="topbar">
@@ -22,6 +23,7 @@
       <div class="menuGrid">
         <button id="newBtn" class="primary big">NEW GAME</button>
         <button id="continueBtn" class="secondary big">CONTINUE</button>
+        <button id="onlineBtn" class="primary big">ONLINE FIGHT <span class="liveBadge">1v1 LIVE</span></button>
         <button id="boardBtn" class="secondary">LEADERBOARD</button>
         <button id="howBtn" class="secondary">HOW TO PLAY</button>
         <button id="settingsBtn" class="secondary">SETTINGS</button>
@@ -63,12 +65,54 @@
   <div class="panel resultPanel"><p id="resultEyebrow" class="eyebrow">VICTORY</p><h2 id="resultTitle"></h2><div id="resultQuote" class="quote"></div><div id="fightStats" class="stats"></div><div id="nextCard" class="nextCard"></div><div class="actions center"><button id="resultMenu" class="secondary">MAIN MENU</button><button id="nextBtn" class="primary">NEXT FIGHT</button></div></div>
 </section>
 
+<section id="onlineSetup" class="screen">
+  <div class="panel dialog">
+    <p class="eyebrow">REAL-TIME MULTIPLAYER</p><h2>ONLINE FIGHT</h2>
+    <p>Fight one classmate live. Use a nickname only — no account, email, or real name required.</p>
+    <label>Fighter nickname<input id="onlineNickname" maxlength="18" autocomplete="off" placeholder="CoffeePowered"></label>
+    <div class="onlineChoice">
+      <div><h3>CREATE A ROOM</h3><p>Generate a 6-character code and send it to your opponent.</p><button id="createOnlineBtn" class="primary">CREATE ROOM</button></div>
+      <div><h3>JOIN A ROOM</h3><p>Enter the code from the host.</p><input id="onlineJoinCode" maxlength="6" autocomplete="off" placeholder="KO2026"><button id="joinOnlineBtn" class="primary">JOIN ROOM</button></div>
+    </div>
+    <p id="onlineStatus" class="status">Create a room or enter a friend’s room code.</p>
+    <button id="onlineBackBtn" class="secondary">BACK</button>
+  </div>
+</section>
+
+<section id="onlineLobby" class="screen">
+  <div class="panel wide">
+    <div class="sectionHead"><div><p class="eyebrow">ONLINE LOCKER ROOM</p><h2>HEAD-TO-HEAD LOBBY</h2></div><span class="onlineConnection">CONNECTED</span></div>
+    <div class="roomCodeBox"><div><small>ROOM CODE</small><strong id="roomCodeText">------</strong></div><div>Send this code to one opponent.</div></div>
+    <div id="onlinePlayers" class="onlinePlayers"></div>
+    <p id="lobbyHint" class="onlineNotice">Ready up when your opponent arrives.</p>
+    <div class="onlineLobbyActions"><button id="onlineReadyBtn" class="primary">READY UP</button><button id="onlineStartBtn" class="primary" hidden disabled>START FIGHT</button><button id="onlineLeaveBtn" class="secondary">LEAVE ROOM</button></div>
+  </div>
+</section>
+
+<section id="onlineFight" class="screen fightScreen">
+  <div class="hud onlineHud">
+    <div class="fighter"><b id="onlinePName">YOU</b><div class="bar hp"><i id="onlinePHp"></i></div><div class="bar stamina"><i id="onlinePStamina"></i></div></div>
+    <div class="round"><b id="onlineRoundText">ROUND 1/3</b><span id="onlineTimerText">0:45</span><small id="onlineScoreText" class="onlineScore">0 - 0</small></div>
+    <div class="fighter right"><b id="onlineOName">OPPONENT</b><div class="bar hp"><i id="onlineOHp"></i></div><small>LIVE OPPONENT</small></div>
+  </div>
+  <div id="onlineCanvasWrap" class="canvasWrap"><canvas id="onlineCanvas" width="960" height="540"></canvas><div id="onlineOverlay" class="overlay hidden"></div></div>
+  <div class="controls">
+    <button data-online-action="dodgeL">↙<span>DODGE</span></button><button data-online-action="punchL">👊<span>LEFT</span></button><button data-online-action="block" class="block">🛡️<span>BLOCK</span></button><button data-online-action="punchR">👊<span>RIGHT</span></button><button data-online-action="dodgeR">↘<span>DODGE</span></button>
+  </div>
+  <div class="fightActions"><button id="onlineFightLeave" class="secondary small">LEAVE FIGHT</button></div>
+  <p class="onlineKeyHint">Keyboard: A left punch • D right punch • ←/→ dodge • S hold to block. Dodge a punch, then counter quickly for bonus damage.</p>
+</section>
+
+<section id="onlineResult" class="screen">
+  <div class="panel resultPanel onlineResultCard"><p id="onlineResultEyebrow" class="eyebrow">ONLINE VICTORY</p><h2 id="onlineResultTitle">YOU WON THE FIGHT!</h2><div id="onlineResultReason" class="quote">KO</div><div id="onlineRecord" class="onlineRecord"></div><p>Want another shot? Return to the same lobby and both fighters can ready up again.</p><div class="actions center"><button id="onlineResultMenu" class="secondary">MAIN MENU</button><button id="onlineRematchBtn" class="primary">REMATCH → LOBBY</button></div></div>
+</section>
+
 <section id="leaderboard" class="screen">
   <div class="panel wide"><div class="sectionHead"><div><p class="eyebrow">ALL-TIME TOP 10</p><h2>HALL OF ACADEMIC PAIN</h2></div><button class="secondary back">BACK</button></div><p id="boardStatus" class="status"></p><div class="tableWrap"><table><thead><tr><th>#</th><th>Fighter</th><th>Score</th><th>Wins</th><th>Highest Opponent</th><th>Finish Time</th></tr></thead><tbody id="boardBody"></tbody></table></div></div>
 </section>
 
 <section id="how" class="screen">
-  <div class="panel wide"><div class="sectionHead"><div><p class="eyebrow">TRAINING ROOM</p><h2>HOW TO PLAY</h2></div><button class="secondary back">BACK</button></div><div class="howGrid"><article><h3>READ THE TELL</h3><p>Every opponent telegraphs attacks. Watch the warning and learn the pattern.</p></article><article><h3>DODGE & COUNTER</h3><p>Dodge the correct direction just before impact. A successful dodge opens a glowing counter window.</p></article><article><h3>MANAGE STAMINA</h3><p>Punches and blocking use stamina. Button-mashing leaves you exhausted.</p></article><article><h3>BEAT THE SEMESTER</h3><p>Defeat all five opponents. Score rewards accuracy, health, speed, counters and difficulty.</p></article></div></div>
+  <div class="panel wide"><div class="sectionHead"><div><p class="eyebrow">TRAINING ROOM</p><h2>HOW TO PLAY</h2></div><button class="secondary back">BACK</button></div><div class="howGrid"><article><h3>READ THE TELL</h3><p>Every campaign opponent telegraphs attacks. Watch the warning and learn the pattern.</p></article><article><h3>DODGE & COUNTER</h3><p>Dodge just before impact. A successful dodge opens a counter window for extra damage.</p></article><article><h3>MANAGE STAMINA</h3><p>Punches, blocking, and online dodges use stamina. Button-mashing leaves you exhausted.</p></article><article><h3>ONLINE FIGHT</h3><p>Create a room, share the six-character code, both fighters ready up, and the host starts a live 1v1 match.</p></article><article><h3>ONLINE ROUNDS</h3><p>Online matches run up to three 45-second rounds. A KO ends it immediately; otherwise rounds are judged by remaining health.</p></article><article><h3>BEAT THE SEMESTER</h3><p>In the campaign, defeat all five opponents. Score rewards accuracy, health, speed, counters and difficulty.</p></article></div></div>
 </section>
 
 <section id="settings" class="screen">
@@ -76,5 +120,7 @@
 </section>
 </main>
 <script src="game.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="online.js"></script>
 </body>
 </html>
