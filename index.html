@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1020">
+<title>Campus Knockout</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🥊 <div><b>CAMPUS KNOCKOUT</b><small>Finals hit back.</small></div></div>
+  <button id="soundToggle" class="icon" aria-label="Toggle sound">🔊</button>
+</header>
+<main>
+<section id="menu" class="screen active">
+  <div class="panel hero">
+    <div>
+      <p class="eyebrow">ORIGINAL RETRO ARCADE BOXING</p>
+      <h1>SURVIVE<br><span>THE SEMESTER.</span></h1>
+      <p class="lead">Five ridiculous opponents. One exhausted student. Zero late submissions.</p>
+      <div class="menuGrid">
+        <button id="newBtn" class="primary big">NEW GAME</button>
+        <button id="continueBtn" class="secondary big">CONTINUE</button>
+        <button id="boardBtn" class="secondary">LEADERBOARD</button>
+        <button id="howBtn" class="secondary">HOW TO PLAY</button>
+        <button id="settingsBtn" class="secondary">SETTINGS</button>
+      </div>
+      <p id="saveStatus" class="status"></p>
+    </div>
+    <div class="poster" aria-hidden="true"><div class="posterBoss">FINAL<br>EXAM</div><div class="posterVs">VS</div><div class="posterYou">YOU</div></div>
+  </div>
+</section>
+
+<section id="setup" class="screen">
+  <div class="panel dialog">
+    <p class="eyebrow">CREATE YOUR FIGHTER</p><h2>ENTER A NICKNAME</h2>
+    <p>Use a nickname only. No real name or email is needed.</p>
+    <form id="setupForm">
+      <label>Fighter nickname<input id="nickname" maxlength="18" autocomplete="off" placeholder="CoffeePowered" required></label>
+      <label>Difficulty<select id="difficulty"><option value="freshman">Freshman</option><option value="junior" selected>Junior</option><option value="senior">Senior</option></select></label>
+      <p id="setupError" class="error"></p>
+      <div class="actions"><button type="button" class="secondary back">BACK</button><button class="primary">ENTER THE RING</button></div>
+    </form>
+  </div>
+</section>
+
+<section id="fight" class="screen fightScreen">
+  <div class="hud">
+    <div class="fighter"><b id="pName">PLAYER</b><div class="bar hp"><i id="pHp"></i></div><div class="bar stamina"><i id="pStamina"></i></div></div>
+    <div class="round"><b id="roundText">ROUND 1</b><span id="timerText">0:45</span><small id="scoreText">SCORE 0</small></div>
+    <div class="fighter right"><b id="oName">OPPONENT</b><div class="bar hp"><i id="oHp"></i></div><small id="oTag"></small></div>
+  </div>
+  <div id="canvasWrap" class="canvasWrap"><canvas id="gameCanvas" width="960" height="540"></canvas><div id="overlay" class="overlay hidden"></div></div>
+  <div class="controls">
+    <button data-action="dodgeL">↙<span>DODGE</span></button><button data-action="punchL">👊<span>LEFT</span></button><button data-action="block" class="block">🛡️<span>BLOCK</span></button><button data-action="punchR">👊<span>RIGHT</span></button><button data-action="dodgeR">↘<span>DODGE</span></button>
+  </div>
+  <div class="fightActions"><button id="pauseBtn" class="secondary small">PAUSE</button><button id="restartBtn" class="secondary small">RESTART FIGHT</button><button id="quitBtn" class="secondary small">QUIT</button></div>
+  <p class="keyhint">Keyboard: A left punch • D right punch • ←/→ dodge • S block • P pause</p>
+</section>
+
+<section id="result" class="screen">
+  <div class="panel resultPanel"><p id="resultEyebrow" class="eyebrow">VICTORY</p><h2 id="resultTitle"></h2><div id="resultQuote" class="quote"></div><div id="fightStats" class="stats"></div><div id="nextCard" class="nextCard"></div><div class="actions center"><button id="resultMenu" class="secondary">MAIN MENU</button><button id="nextBtn" class="primary">NEXT FIGHT</button></div></div>
+</section>
+
+<section id="leaderboard" class="screen">
+  <div class="panel wide"><div class="sectionHead"><div><p class="eyebrow">ALL-TIME TOP 10</p><h2>HALL OF ACADEMIC PAIN</h2></div><button class="secondary back">BACK</button></div><p id="boardStatus" class="status"></p><div class="tableWrap"><table><thead><tr><th>#</th><th>Fighter</th><th>Score</th><th>Wins</th><th>Highest Opponent</th><th>Finish Time</th></tr></thead><tbody id="boardBody"></tbody></table></div></div>
+</section>
+
+<section id="how" class="screen">
+  <div class="panel wide"><div class="sectionHead"><div><p class="eyebrow">TRAINING ROOM</p><h2>HOW TO PLAY</h2></div><button class="secondary back">BACK</button></div><div class="howGrid"><article><h3>READ THE TELL</h3><p>Every opponent telegraphs attacks. Watch the warning and learn the pattern.</p></article><article><h3>DODGE & COUNTER</h3><p>Dodge the correct direction just before impact. A successful dodge opens a glowing counter window.</p></article><article><h3>MANAGE STAMINA</h3><p>Punches and blocking use stamina. Button-mashing leaves you exhausted.</p></article><article><h3>BEAT THE SEMESTER</h3><p>Defeat all five opponents. Score rewards accuracy, health, speed, counters and difficulty.</p></article></div></div>
+</section>
+
+<section id="settings" class="screen">
+  <div class="panel dialog"><p class="eyebrow">LOCKER ROOM</p><h2>SETTINGS</h2><label class="switch">Sound effects<input id="soundSetting" type="checkbox" checked></label><label class="switch">Screen shake<input id="shakeSetting" type="checkbox" checked></label><label class="switch">Reduced motion<input id="motionSetting" type="checkbox"></label><button class="secondary back">BACK</button></div>
+</section>
+</main>
+<script src="game.js"></script>
+</body>
+</html>
